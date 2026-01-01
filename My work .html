@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMS | Student Academic Monitor System</title>
+    <style>
+        :root {
+            --primary: #6366f1; --accent: #8b5cf6; --bg: #0f172a;
+            --card-bg: #1e293b; --text-main: #f8fafc; --text-dim: #94a3b8;
+            --border: #334155; --success: #10b981; --danger: #ef4444;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; display: flex; min-height: 100vh; }
+        .hidden { display: none !important; }
+
+        /* Login Screen */
+        #login-container { 
+            width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; 
+            background: radial-gradient(circle at center, #1e1b4b, #0f172a); position: fixed; z-index: 1000;
+        }
+        .login-box {
+            background: var(--card-bg); padding: 3rem; border-radius: 24px; border: 1px solid var(--border);
+            width: 360px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #0f172a; border: 1px solid var(--border); border-radius: 8px; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        button:hover { background: var(--accent); transform: translateY(-1px); }
+
+        /* Dashboard Layout */
+        #main-dashboard { display: grid; grid-template-columns: 280px 1fr; width: 100%; }
+        .sidebar { background: var(--card-bg); border-right: 1px solid var(--border); padding: 2rem; display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; }
+        .main-content { padding: 2rem; overflow-y: auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 1rem; }
+        
+        h2 { font-size: 0.85rem; color: var(--accent); margin-top: 0; text-transform: uppercase; letter-spacing: 1.5px; display: flex; align-items: center; gap: 8px; }
+        .timer-display { font-size: 2.5rem; font-weight: 800; text-align: center; margin: 10px 0; font-family: monospace; color: var(--success); }
+        .attendance-card { background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid var(--border); }
+        .list-item { background: #0f172a; padding: 10px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; border-left: 3px solid var(--primary); }
+    </style>
+</head>
+<body>
+
+    <div id="login-container">
+        <div class="login-box">
+            <h1 style="color: white; margin: 0; font-size: 2.5rem;">SAMS</h1>
+            <p style="color: var(--text-dim); margin-bottom: 2rem; font-size: 0.8rem;">Student Academic Monitor System</p>
+            
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Enter System</button>
+            <p id="login-error" style="color: var(--danger); font-size: 0.8rem; margin-top: 15px;"></p>
+            
+            <div style="margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+                <p style="color: var(--text-dim); font-size: 0.7rem; letter-spacing: 0.5px; line-height: 1.5;">
+                    Developed by <br>
+                    <b style="color: var(--primary); font-size: 0.8rem;">Atharv Dhere X Gemini</b>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-dashboard" class="hidden">
+        <aside class="sidebar">
+            <h1 id="user-display" style="font-size: 1.4rem; margin-bottom: 0; color: white;">User</h1>
+            <p style="color: var(--primary); font-size: 0.7rem; font-weight: bold; margin-bottom: 2rem;">SAMS PRO v3.1</p>
+            
+            <div class="card" style="background: rgba(0,0,0,0.2); border: none; padding: 1rem;">
+                <h2>⏱ Focus Timer</h2>
+                <div class="timer-display" id="timer">25:00</div>
+                <div style="display:flex; gap:5px;">
+                    <button onclick="startTimer()" style="background: var(--success); padding: 8px;">Start</button>
+                    <button onclick="resetTimer()" style="background: var(--danger); padding: 8px;">Reset</button>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(0,0,0,0.2); border: none; padding: 1rem;">
+                <h2>🔗 Resources</h2>
+                <button onclick="window.open('https://cas.mitwpu.edu.in/')" style="background:#334155; margin-bottom:5px; font-size:0.8rem;">MIT-WPU CAS</button>
+                <button onclick="window.open('https://chatgpt.com')" style="background:#334155; font-size:0.8rem;">AI Research</button>
+            </div>
+
+            <button onclick="logout()" style="background:none; border:1px solid var(--danger); color:var(--danger); margin-top:auto;">System Logout</button>
+        </aside>
+
+        <main class="main-content">
+            <div class="grid">
+                <div class="card" style="grid-column: 1 / -1;">
+                    <h2>📈 80% Attendance Monitor</h2>
+                    <div id="attendance-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>💰 Finance</h2>
+                    <input type="text" id="exp-name" placeholder="Item">
+                    <input type="number" id="exp-amt" placeholder="₹">
+                    <button onclick="addExpense()">Add Transaction</button>
+                    <div id="expense-list" style="margin-top:15px;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>✅ Task Reminders</h2>
+                    <input type="text" id="todo-input" placeholder="New task...">
+                    <button onclick="addTask()">Add Task</button>
+                    <div id="todo-list" style="margin-top:15px;"></div>
+                </div>
+
+                <div class="card" style="grid-column: 1 / -1;">
+                    <h2>📚 Subject Assignments</h2>
+                    <div id="subject-workload-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const users = {
+            "Atharv Dhere": ["1262250205", "1262250204"], // Both passwords will work
+            "Aryan Lole": "1262253709",
+            "Pavan Dhulipala": "1262252556"
+        };
+
+        const subjects = [
+            "Engineering Mechanics", "Electrical & Electronics Engineering", 
+            "Engineering Chemistry", "AI for Everyone", 
+            "Foundation of Peace", "Indian Knowledge System", "Integral Calculus"
+        ];
+
+        let timerInterval;
+        let timeLeft = 1500;
+
+        function login() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            
+            const userPass = users[u];
+            let authenticated = false;
+
+            if (Array.isArray(userPass)) {
+                authenticated = userPass.includes(p);
+            } else {
+                authenticated = userPass === p;
+            }
+
+            if(authenticated) {
+                document.getElementById('login-container').classList.add('hidden');
+                document.getElementById('main-dashboard').classList.remove('hidden');
+                document.getElementById('user-display').innerText = u;
+                init();
+            } else {
+                document.getElementById('login-error').innerText = "Access Denied: Check Credentials";
+            }
+        }
+
+        function logout() { location.reload(); }
+
+        function init() {
+            const attGrid = document.getElementById('attendance-grid');
+            const workGrid = document.getElementById('subject-workload-grid');
+            attGrid.innerHTML = ''; workGrid.innerHTML = '';
+
+            subjects.forEach(sub => {
+                const id = sub.replace(/\s/g,'');
+                attGrid.innerHTML += `
+                    <div class="attendance-card">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                            <b>${sub}</b>
+                            <span id="perc-${id}" style="color:var(--primary); font-weight:bold;">0%</span>
+                        </div>
+                        <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:10px;">
+                            Present: <span id="pres-${id}" style="color:white">0</span> / Total: <span id="tot-${id}" style="color:white">0</span>
+                        </div>
+                        <div id="stat-${id}" style="font-size:0.7rem; margin-bottom:10px; font-weight:bold;">No data</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 40px; gap:5px;">
+                            <button onclick="updateAtt('${sub}', true)" style="padding:5px; background:var(--success); font-size:0.7rem;">Present</button>
+                            <button onclick="updateAtt('${sub}', false)" style="padding:5px; background:var(--danger); font-size:0.7rem;">Absent</button>
+                            <button onclick="resetAtt('${sub}')" style="padding:5px; background:#475569; font-size:0.7rem;">↺</button>
+                        </div>
+                    </div>`;
+
+                workGrid.innerHTML += `
+                    <div class="attendance-card">
+                        <b style="font-size:0.8rem; color:var(--accent);">${sub}</b>
+                        <input id="in-work-${id}" placeholder="Task..." style="font-size:0.75rem; padding:8px; margin-top:8px;">
+                        <button onclick="addWork('${sub}')" style="padding:6px; font-size:0.7rem;">Add</button>
+                        <div id="list-work-${id}" style="margin-top:10px;"></div>
+                    </div>`;
+            });
+        }
+
+        function updateAtt(sub, isPresent) {
+            const id = sub.replace(/\s/g,'');
+            let p = parseInt(document.getElementById(`pres-${id}`).innerText);
+            let t = parseInt(document.getElementById(`tot-${id}`).innerText);
+            isPresent ? p++ : null; t++;
+            const perc = ((p/t)*100).toFixed(1);
+            document.getElementById(`pres-${id}`).innerText = p;
+            document.getElementById(`tot-${id}`).innerText = t;
+            document.getElementById(`perc-${id}`).innerText = perc + "%";
+            const status = document.getElementById(`stat-${id}`);
+            if(perc < 80) {
+                const needed = Math.ceil((0.8 * t - p) / 0.2);
+                status.innerText = `⚠️ Need ${needed} more classes`;
+                status.style.color = "var(--danger)";
+            } else {
+                const canSkip = Math.floor((p / 0.8) - t);
+                status.innerText = canSkip > 0 ? `✅ Safe to skip ${canSkip}` : "🎯 At 80% limit";
+                status.style.color = "var(--success)";
+            }
+        }
+
+        function resetAtt(sub) {
+            const id = sub.replace(/\s/g,'');
+            document.getElementById(`pres-${id}`).innerText="0"; document.getElementById(`tot-${id}`).innerText="0";
+            document.getElementById(`perc-${id}`).innerText="0%"; document.getElementById(`stat-${id}`).innerText="No data";
+        }
+
+        function addWork(sub) {
+            const id = sub.replace(/\s/g,''); const val = document.getElementById(`in-work-${id}`).value;
+            if(!val) return;
+            const div = document.createElement('div'); div.className = 'list-item';
+            div.innerHTML = `<span>${val}</span><span onclick="this.parentElement.remove()" style="cursor:pointer; color:var(--danger)">×</span>`;
+            document.getElementById(`list-work-${id}`).appendChild(div);
+            document.getElementById(`in-work-${id}`).value = '';
+        }
+
+        function addExpense() {
+            const n = document.getElementById('exp-name').value; const a = document.getElementById('exp-amt').value;
+            if(!n || !a) return;
+            const div = document.createElement('div'); div.className = 'list-item';
+            div.innerHTML = `<span>${n}</span><b style="color:var(--success)">₹${a}</b>`;
+            document.getElementById('expense-list').prepend(div);
+            document.getElementById('exp-name').value = ''; document.getElementById('exp-amt').value = '';
+        }
+
+        function addTask() {
+            const v = document.getElementById('todo-input').value;
+            if(!v) return;
+            const div = document.createElement('div'); div.className = 'list-item';
+            div.innerHTML = `<span>${v}</span><span onclick="this.parentElement.remove()" style="cursor:pointer; color:var(--danger)">×</span>`;
+            document.getElementById('todo-list').prepend(div);
+            document.getElementById('todo-input').value = '';
+        }
+
+        function startTimer() {
+            if(timerInterval) return;
+            timerInterval = setInterval(() => {
+                timeLeft--; updateTimerDisplay();
+                if(timeLeft <= 0) { clearInterval(timerInterval); alert("Focus session complete!"); resetTimer(); }
+            }, 1000);
+        }
+        function resetTimer() { clearInterval(timerInterval); timerInterval = null; timeLeft = 1500; updateTimerDisplay(); }
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft/60); const s = timeLeft%60;
+            document.getElementById('timer').innerText = `${m}:${s<10?'0'+s:s}`;
+        }
+    </script>
+</body>
+</html>
