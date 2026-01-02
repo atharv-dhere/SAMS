@@ -31,7 +31,10 @@
         .login-footer { margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
         .dev-text { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 8px; opacity: 0.8; }
         .dev-highlight { color: var(--primary); font-weight: 800; }
-        .login-quote { font-size: 0.75rem; color: var(--text-main); font-style: italic; opacity: 0.9; line-height: 1.4; padding: 0 10px; }
+        .login-quote { font-size: 0.75rem; color: var(--text-main); font-style: italic; opacity: 0.9; line-height: 1.4; padding: 0 10px; margin-bottom: 15px; }
+        
+        /* Legal Disclaimer Style */
+        .legal-disclaimer { font-size: 0.55rem; color: var(--text-dim); line-height: 1.3; text-align: center; margin-top: 10px; opacity: 0.6; padding: 0 5px; }
 
         /* --- DASHBOARD --- */
         #main-dashboard { width: 100%; position: relative; }
@@ -137,6 +140,9 @@
             <div class="login-footer">
                 <p class="dev-text">DEVELOPED BY <span class="dev-highlight">ATHARV DHERE X EVRY</span></p>
                 <p id="login-quote" class="login-quote"></p>
+                <div class="legal-disclaimer">
+                    SAMS is an independent student project for educational purposes. Not affiliated with MIT-WPU, SAMS Odisha, or official academic portals. Data provided 'as-is' with no liability for accuracy or loss.
+                </div>
             </div>
         </div>
     </div>
@@ -189,6 +195,10 @@
                 </div>
             </div>
 
+            <div style="margin-top: 20px; text-align: center;">
+                <span onclick="showLegal()" style="font-size: 0.6rem; color: var(--text-dim); text-decoration: underline; cursor: pointer;">Terms & Disclaimer</span>
+            </div>
+
             <button onclick="logout()" style="background:var(--danger); color:white; font-size: 0.75rem; font-weight: 800; padding: 12px; border-radius: 12px; border:none; cursor:pointer; margin-top: auto;">LOGOUT SYSTEM</button>
         </aside>
 
@@ -232,15 +242,15 @@
     </div>
 
     <script>
-        const users = { 
-            "Atharv Dhere": ["1262250205", "1262250204"], 
-            "Aryan Lole": "1262253709", 
-            "Pavan Dhulipala": "1262252556", 
-            "Shubham Rathor": "1262252788", 
+        const users = { 
+            "Atharv Dhere": ["1262250205", "1262250204"], 
+            "Aryan Lole": "1262253709", 
+            "Pavan Dhulipala": "1262252556", 
+            "Shubham Rathor": "1262252788", 
             "Aditya Desai": "1262252456",
             "Anshaj Mishra": "1262251082",
             "Harshit Kulthe": "1272251187",
-			"Parth Dandnaik": "1262251050", 
+			"Parth Dandnaik": "1262251050", 
             "Aditya Srivastava": "1262250553"
         };
         const subjects = ["Engineering Mechanics", "Electrical & Electronics", "Engineering Chemistry", "AI for Everyone", "Foundation of Peace", "Integral Calculus"];
@@ -358,14 +368,14 @@
             document.getElementById('expense-list').innerHTML = data.expenses || "";
         }
 
-        function addTask() { 
+        function addTask() { 
             const v = document.getElementById('todo-input').value; if(!v) return;
             const d = document.createElement('div'); d.className = 'list-item';
             d.innerHTML = `<span>${v}</span><span onclick="this.parentElement.remove(); saveData();" style="cursor:pointer; color:var(--danger)">×</span>`;
             document.getElementById('todo-list').prepend(d); document.getElementById('todo-input').value = ''; saveData();
         }
 
-        function addExpense() { 
+        function addExpense() { 
             const v = document.getElementById('exp-amt').value; if(!v) return;
             const d = document.createElement('div'); d.className = 'list-item';
             d.innerHTML = `<span>Logged Expense</span><b>₹${v}</b>`;
@@ -374,6 +384,11 @@
 
         function logout() { location.reload(); }
         function resetAtt(sub) { const id = sub.replace(/\s/g,''); document.getElementById(`pres-${id}`).innerText="0"; document.getElementById(`tot-${id}`).innerText="0"; updateAtt(sub, false, true); saveData(); }
+        
+        // Legal Alert Function
+        function showLegal() {
+            alert("SAMS LEGAL NOTICE:\n\n1. SAMS is an independent student project and is not affiliated with MIT-WPU, the Government of Odisha (SAMS Odisha), or any official portal.\n\n2. This software is provided 'as-is'. The developer (Atharv Dhere) is not responsible for any data loss, academic inaccuracies, or missed classes.\n\n3. All external links are the property of their respective owners.");
+        }
     </script>
 </body>
 </html>
