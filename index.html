@@ -33,7 +33,6 @@
         .dev-highlight { color: var(--primary); font-weight: 800; }
         .login-quote { font-size: 0.75rem; color: var(--text-main); font-style: italic; opacity: 0.9; line-height: 1.4; padding: 0 10px; margin-bottom: 15px; }
         
-        /* Legal Disclaimer Style */
         .legal-disclaimer { font-size: 0.55rem; color: var(--text-dim); line-height: 1.3; text-align: center; margin-top: 10px; opacity: 0.6; padding: 0 5px; }
 
         /* --- DASHBOARD --- */
@@ -43,7 +42,7 @@
         .sidebar { 
             position: fixed; 
             top: 0; 
-            left: -300px; /* Hidden by default */
+            left: -300px; 
             width: 300px; 
             height: 100vh; 
             background: rgba(15, 23, 42, 0.98); 
@@ -92,14 +91,12 @@
         .card { background: var(--card-bg); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border); backdrop-filter: blur(10px); margin-bottom: 1.5rem; }
         h2 { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 1.2rem; font-weight: 800; }
 
-        /* --- ACCORDION PRESERVED --- */
         .accordion { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.03); transition: 0.3s; }
         .acc-btn { width: 100%; padding: 14px; background: none; color: var(--text-main); text-align: left; font-size: 0.8rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; border: none; cursor: pointer; border-radius: 0; }
         .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: rgba(0,0,0,0.2); }
         .acc-content.show { max-height: 300px; padding-bottom: 10px; }
         .acc-inner { padding: 0 14px 10px 14px; font-size: 0.75rem; color: var(--text-dim); }
 
-        /* --- TIMETABLE --- */
         .tt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
         .tt-day { background: rgba(22, 25, 48, 0.5); border: 1px solid var(--border); padding: 1.5rem; border-radius: 24px; min-height: 200px; }
         .tt-day.active-day { border: 2px solid var(--accent); background: rgba(45, 27, 105, 0.4); }
@@ -108,11 +105,9 @@
         .tt-time { font-size: 0.75rem; color: var(--text-dim); display: block; margin-bottom: 2px; }
         .tt-subject { font-size: 0.85rem; font-weight: 500; color: #fff; }
 
-        /* --- BUTTONS --- */
         .res-btn { background: rgba(255, 255, 255, 0.05); color: var(--text-main); text-align: left; padding: 10px 14px; margin-bottom: 8px; font-size: 0.8rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; transition: 0.2s; cursor: pointer; border-radius: 10px; width: 100%; box-sizing: border-box; }
         .res-btn:hover { background: rgba(99, 102, 241, 0.1); border-color: var(--primary); transform: translateX(5px); }
 
-        /* --- COMPONENTS --- */
         .attendance-card { background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 18px; border: 1px solid var(--border); }
         .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin: 12px 0; }
         .progress-bar { height: 100%; width: 0%; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 10px; }
@@ -134,7 +129,7 @@
                 <input type="password" id="password" placeholder="Password">
                 <span class="pass-toggle" onclick="togglePass()">SHOW</span>
             </div>
-            <button class="btn-primary" onclick="login()">Enter System</button>
+            <button class="btn-primary" onclick="login()">Log In</button>
             <p id="login-error" style="color: var(--danger); font-size: 0.8rem; margin-top: 15px;"></p>
 
             <div class="login-footer">
@@ -199,7 +194,7 @@
                 <span onclick="showLegal()" style="font-size: 0.6rem; color: var(--text-dim); text-decoration: underline; cursor: pointer;">Terms & Disclaimer</span>
             </div>
 
-            <button onclick="logout()" style="background:var(--danger); color:white; font-size: 0.75rem; font-weight: 800; padding: 12px; border-radius: 12px; border:none; cursor:pointer; margin-top: auto;">LOGOUT SYSTEM</button>
+            <button onclick="logout()" style="margin-top: auto; background: var(--danger); color: white; font-weight: 800; font-size: 0.7rem; letter-spacing: 1px; padding: 12px; border-radius: 12px; border:none; cursor:pointer;">Log Out</button>
         </aside>
 
         <main class="main-content">
@@ -250,8 +245,9 @@
             "Aditya Desai": "1262252456",
             "Anshaj Mishra": "1262251082",
             "Harshit Kulthe": "1272251187",
-			"Parth Dandnaik": "1262251050", 
-            "Aditya Srivastava": "1262250553"
+            "Parth Dandnaik": "1262251050", 
+            "Aditya Srivastava": "1262250553",
+			"Payal Wagh": "1262253971"
         };
         const subjects = ["Engineering Mechanics", "Electrical & Electronics", "Engineering Chemistry", "AI for Everyone", "Foundation of Peace", "Integral Calculus"];
         const quotes = ["The secret of getting ahead is getting started.", "Don't stop until you're proud.", "Success is the sum of small efforts repeated daily.", "Your future is created by what you do today.", "Focus on being productive instead of busy."];
@@ -259,11 +255,21 @@
 
         let currentUser = "";
 
-        window.onload = () => { document.getElementById('login-quote').innerText = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`; };
+        window.onload = () => { 
+            document.getElementById('login-quote').innerText = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`; 
+            checkSession(); 
+        };
+
+        function checkSession() {
+            const savedSession = sessionStorage.getItem("sams_active_user");
+            if(savedSession) {
+                currentUser = savedSession;
+                enterDashboard();
+            }
+        }
 
         function togglePass() { const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; }
 
-        /* --- SIDE SWIPE LOGIC --- */
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('menu-overlay');
@@ -271,7 +277,6 @@
             overlay.classList.toggle('show');
         }
 
-        // Gesture Detection
         let touchstartX = 0;
         let touchendX = 0;
 
@@ -282,9 +287,9 @@
         }, false);
 
         function handleGesture() {
-            if (touchendX > touchstartX + 100) toggleMenu(); // Swipe Right
+            if (touchendX > touchstartX + 100) toggleMenu(); 
             if (touchendX < touchstartX - 100) {
-                 if(document.getElementById('sidebar').classList.contains('open')) toggleMenu(); // Swipe Left
+                 if(document.getElementById('sidebar').classList.contains('open')) toggleMenu(); 
             }
         }
 
@@ -297,11 +302,21 @@
             const u = document.getElementById('username').value, p = document.getElementById('password').value;
             if(users[u] && (Array.isArray(users[u]) ? users[u].includes(p) : users[u] === p)) {
                 currentUser = u;
-                document.getElementById('login-container').classList.add('hidden');
-                document.getElementById('main-dashboard').classList.remove('hidden');
-                document.getElementById('user-display').innerText = u;
-                initDashboard(); loadData(); updateRemainingDays();
+                sessionStorage.setItem("sams_active_user", u); 
+                enterDashboard();
             } else { document.getElementById('login-error').innerText = "Access Denied"; }
+        }
+
+        function enterDashboard() {
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('main-dashboard').classList.remove('hidden');
+            document.getElementById('user-display').innerText = currentUser;
+            initDashboard(); loadData(); updateRemainingDays();
+        }
+
+        function logout() { 
+            sessionStorage.removeItem("sams_active_user"); 
+            location.reload(); 
         }
 
         function updateRemainingDays() {
@@ -318,7 +333,10 @@
                 attGrid.innerHTML += `<div class="attendance-card"><div style="display:flex; justify-content:space-between; align-items:center;"><b style="font-size:0.85rem;">${sub}</b><span id="perc-${id}" style="font-weight:800; color:var(--primary);">0%</span></div><div class="progress-container"><div id="bar-${id}" class="progress-bar" style="background:var(--primary)"></div></div><div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:12px;">P: <span id="pres-${id}">0</span> | T: <span id="tot-${id}">0</span></div><div id="stat-${id}" style="font-size:0.65rem; font-weight:800; margin-bottom:15px;">-</div><div style="display:grid; grid-template-columns: 1fr 1fr 40px; gap:6px;"><button onclick="updateAtt('${sub}', true)" style="background:var(--success); color:white; font-size:0.6rem; padding:8px;">PRESENT</button><button onclick="updateAtt('${sub}', false)" style="background:var(--danger); color:white; font-size:0.6rem; padding:8px;">ABSENT</button><button onclick="resetAtt('${sub}')" style="background:rgba(255,255,255,0.1); padding:8px;">↺</button></div></div>`;
                 noteGrid.innerHTML += `<div style="margin-bottom:1.5rem;"><label style="font-size:0.7rem; color:var(--accent); font-weight:800; display:block; margin-bottom:5px;">${sub}</label><div style="display:flex; gap:5px;"><input id="note-in-${id}" placeholder="Type note..." style="padding:8px; font-size:0.8rem;"><button onclick="addNote('${sub}')" style="background:var(--primary); width:auto; padding:0 15px; font-size:0.7rem;">SAVE</button></div><div id="note-list-${id}" style="margin-top:10px;"></div></div>`;
             });
-            const d = new Date().getDay(); if(d >=1 && d<=5) document.getElementById(`day-${d}`).classList.add('active-day');
+            const d = new Date().getDay(); if(d >=1 && d<=5) {
+                const dayEl = document.getElementById(`day-${d}`);
+                if(dayEl) dayEl.classList.add('active-day');
+            }
         }
 
         function updateAtt(sub, isP, silent=false) {
@@ -382,12 +400,10 @@
             document.getElementById('expense-list').prepend(d); document.getElementById('exp-amt').value = ''; saveData();
         }
 
-        function logout() { location.reload(); }
         function resetAtt(sub) { const id = sub.replace(/\s/g,''); document.getElementById(`pres-${id}`).innerText="0"; document.getElementById(`tot-${id}`).innerText="0"; updateAtt(sub, false, true); saveData(); }
         
-        // Legal Alert Function
         function showLegal() {
-            alert("SAMS LEGAL NOTICE:\n\n1. SAMS is an independent student project and is not affiliated with MIT-WPU, the Government of Odisha (SAMS Odisha), or any official portal.\n\n2. This software is provided 'as-is'. The developer (Atharv Dhere) is not responsible for any data loss, academic inaccuracies, or missed classes.\n\n3. All external links are the property of their respective owners.");
+            alert("SAMS LEGAL NOTICE:\n\n1. SAMS is an independent student project and is not affiliated with MIT-WPU, the Government of Odisha (SAMS Odisha), or any official portal.\n\n2. Software provided 'as-is'. Developer not responsible for data loss.\n\n3. External links property of respective owners.");
         }
     </script>
 </body>
