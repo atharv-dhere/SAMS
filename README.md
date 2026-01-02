@@ -1,7 +1,7 @@
 # SAMSbyAtharvDhere
 SAMS: Student Academic Monitor System Developed by Atharv Dhere, SAMS is a pro engineering dashboard featuring a smart 80% attendance monitor for 7 subjects, a time table, finance tracker, and task manager. Built with a dark-mode UI, it uses secure multi-user login and local storage to keep student data private and organized.
 
-## ⚖️ Legal Disclaimer & Terms of Use
+## Legal Disclaimer & Terms of Use
 
 ### 1. Ownership & Copyright
 Copyright © 2026 Atharv Dhere. All rights reserved. 
