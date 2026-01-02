@@ -34,17 +34,64 @@
         .login-quote { font-size: 0.75rem; color: var(--text-main); font-style: italic; opacity: 0.9; line-height: 1.4; padding: 0 10px; }
 
         /* --- DASHBOARD --- */
-        #main-dashboard { display: grid; grid-template-columns: 300px 1fr; width: 100%; }
-        .sidebar { background: rgba(15, 23, 42, 0.95); border-right: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; overflow-y: auto; gap: 10px; }
-        .main-content { padding: 2rem; overflow-y: auto; }
+        #main-dashboard { width: 100%; position: relative; }
+        
+        /* --- SIDE SWIPE MENU --- */
+        .sidebar { 
+            position: fixed; 
+            top: 0; 
+            left: -300px; /* Hidden by default */
+            width: 300px; 
+            height: 100vh; 
+            background: rgba(15, 23, 42, 0.98); 
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border); 
+            padding: 1.5rem; 
+            display: flex; 
+            flex-direction: column; 
+            z-index: 2000; 
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 10px; 
+            box-sizing: border-box;
+        }
+        .sidebar.open { transform: translateX(300px); }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+        .menu-overlay.show { display: block; }
+
+        .main-content { padding: 5rem 2rem 2rem 2rem; overflow-y: auto; }
+        
+        .menu-toggle-btn {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 1500;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
         .card { background: var(--card-bg); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border); backdrop-filter: blur(10px); margin-bottom: 1.5rem; }
         h2 { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 1.2rem; font-weight: 800; }
 
-        /* --- SIDEBAR ACCORDION --- */
+        /* --- ACCORDION PRESERVED --- */
         .accordion { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.03); transition: 0.3s; }
         .acc-btn { width: 100%; padding: 14px; background: none; color: var(--text-main); text-align: left; font-size: 0.8rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; border: none; cursor: pointer; border-radius: 0; }
-        .acc-btn:hover { background: rgba(255,255,255,0.05); }
         .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: rgba(0,0,0,0.2); }
         .acc-content.show { max-height: 300px; padding-bottom: 10px; }
         .acc-inner { padding: 0 14px 10px 14px; font-size: 0.75rem; color: var(--text-dim); }
@@ -72,6 +119,7 @@
 <body>
 
     <div class="bg-glow"></div>
+    <div class="menu-overlay" id="menu-overlay" onclick="toggleMenu()"></div>
 
     <div id="login-container">
         <div class="login-box">
@@ -94,8 +142,9 @@
     </div>
 
     <div id="main-dashboard" class="hidden">
-        <aside class="sidebar">
-            
+        <button class="menu-toggle-btn" onclick="toggleMenu()">☰ MENU</button>
+
+        <aside class="sidebar" id="sidebar">
             <div class="accordion">
                 <button class="acc-btn" onclick="toggleAccordion(this)">
                     <span>IDENTITY</span>
@@ -183,15 +232,15 @@
     </div>
 
     <script>
-        const users = { 
-            "Atharv Dhere": ["1262250205", "1262250204"], 
-            "Aryan Lole": "1262253709", 
-            "Pavan Dhulipala": "1262252556", 
-            "Shubham Rathor": "1262252788", 
+        const users = { 
+            "Atharv Dhere": ["1262250205", "1262250204"], 
+            "Aryan Lole": "1262253709", 
+            "Pavan Dhulipala": "1262252556", 
+            "Shubham Rathor": "1262252788", 
             "Aditya Desai": "1262252456",
             "Anshaj Mishra": "1262251082",
             "Harshit Kulthe": "1272251187",
-			"Parth Dandnaik": "1262251050", 
+			"Parth Dandnaik": "1262251050", 
             "Aditya Srivastava": "1262250553"
         };
         const subjects = ["Engineering Mechanics", "Electrical & Electronics", "Engineering Chemistry", "AI for Everyone", "Foundation of Peace", "Integral Calculus"];
@@ -203,7 +252,32 @@
         window.onload = () => { document.getElementById('login-quote').innerText = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`; };
 
         function togglePass() { const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; }
-        
+
+        /* --- SIDE SWIPE LOGIC --- */
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('menu-overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        // Gesture Detection
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        document.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; }, false);
+        document.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleGesture();
+        }, false);
+
+        function handleGesture() {
+            if (touchendX > touchstartX + 100) toggleMenu(); // Swipe Right
+            if (touchendX < touchstartX - 100) {
+                 if(document.getElementById('sidebar').classList.contains('open')) toggleMenu(); // Swipe Left
+            }
+        }
+
         function toggleAccordion(btn) {
             const content = btn.nextElementSibling;
             content.classList.toggle('show');
@@ -284,14 +358,14 @@
             document.getElementById('expense-list').innerHTML = data.expenses || "";
         }
 
-        function addTask() { 
+        function addTask() { 
             const v = document.getElementById('todo-input').value; if(!v) return;
             const d = document.createElement('div'); d.className = 'list-item';
             d.innerHTML = `<span>${v}</span><span onclick="this.parentElement.remove(); saveData();" style="cursor:pointer; color:var(--danger)">×</span>`;
             document.getElementById('todo-list').prepend(d); document.getElementById('todo-input').value = ''; saveData();
         }
 
-        function addExpense() { 
+        function addExpense() { 
             const v = document.getElementById('exp-amt').value; if(!v) return;
             const d = document.createElement('div'); d.className = 'list-item';
             d.innerHTML = `<span>Logged Expense</span><b>₹${v}</b>`;
