@@ -35,11 +35,19 @@
 
         /* --- DASHBOARD --- */
         #main-dashboard { display: grid; grid-template-columns: 300px 1fr; width: 100%; }
-        .sidebar { background: rgba(15, 23, 42, 0.95); border-right: 1px solid var(--border); padding: 2rem; display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; overflow-y: auto; }
+        .sidebar { background: rgba(15, 23, 42, 0.95); border-right: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; overflow-y: auto; gap: 10px; }
         .main-content { padding: 2rem; overflow-y: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
         .card { background: var(--card-bg); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border); backdrop-filter: blur(10px); margin-bottom: 1.5rem; }
         h2 { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 1.2rem; font-weight: 800; }
+
+        /* --- SIDEBAR ACCORDION --- */
+        .accordion { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.03); transition: 0.3s; }
+        .acc-btn { width: 100%; padding: 14px; background: none; color: var(--text-main); text-align: left; font-size: 0.8rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; border: none; cursor: pointer; border-radius: 0; }
+        .acc-btn:hover { background: rgba(255,255,255,0.05); }
+        .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: rgba(0,0,0,0.2); }
+        .acc-content.show { max-height: 300px; padding-bottom: 10px; }
+        .acc-inner { padding: 0 14px 10px 14px; font-size: 0.75rem; color: var(--text-dim); }
 
         /* --- TIMETABLE --- */
         .tt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
@@ -50,8 +58,8 @@
         .tt-time { font-size: 0.75rem; color: var(--text-dim); display: block; margin-bottom: 2px; }
         .tt-subject { font-size: 0.85rem; font-weight: 500; color: #fff; }
 
-        /* --- SIDEBAR BUTTONS --- */
-        .res-btn { background: rgba(255, 255, 255, 0.05); color: var(--text-main); text-align: left; padding: 10px 14px; margin-bottom: 8px; font-size: 0.8rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; transition: 0.2s; cursor: pointer; border-radius: 10px; }
+        /* --- BUTTONS --- */
+        .res-btn { background: rgba(255, 255, 255, 0.05); color: var(--text-main); text-align: left; padding: 10px 14px; margin-bottom: 8px; font-size: 0.8rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; transition: 0.2s; cursor: pointer; border-radius: 10px; width: 100%; box-sizing: border-box; }
         .res-btn:hover { background: rgba(99, 102, 241, 0.1); border-color: var(--primary); transform: translateX(5px); }
 
         /* --- COMPONENTS --- */
@@ -87,33 +95,52 @@
 
     <div id="main-dashboard" class="hidden">
         <aside class="sidebar">
-            <h1 id="user-display" style="font-size: 1.5rem; margin: 0; color: white;">User</h1>
-            <p style="color: var(--primary); font-size: 0.65rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 2px;">FY MECH ROBO • SEM II</p>
             
-            <div class="card" style="padding: 1rem; background: rgba(99, 102, 241, 0.1); border-color: var(--primary); margin-bottom: 1rem;">
-                <h2 style="margin-bottom: 8px;">Sem II Timeline</h2>
-                <div style="font-size: 0.7rem; line-height: 1.4;">
-                    <div>• Sem 2 starts : <b>5th Jan 2026</b></div>
-                    <div>• Mid-Term Exam: <b>9th to 20th Mar 2026</b></div>
-                    <div>• End Term Exams: <b>14th May to 15th Jun 2026</b></div>
+            <div class="accordion">
+                <button class="acc-btn" onclick="toggleAccordion(this)">
+                    <span>IDENTITY</span>
+                    <span style="font-size:0.6rem">▼</span>
+                </button>
+                <div class="acc-content show">
+                    <div class="acc-inner">
+                        <h1 id="user-display" style="font-size: 1.3rem; margin: 0 0 5px 0; color: white;">User</h1>
+                        <p style="color: var(--primary); font-size: 0.6rem; font-weight: 800; margin: 0; letter-spacing: 2px;">FY MECH ROBO • SEM II</p>
+                    </div>
                 </div>
             </div>
 
-            <button onclick="toggleResources()" class="res-btn" style="background: var(--accent); color: white; justify-content: center; font-weight: 800; margin-bottom: 1rem;">
-                 TOGGLE RESOURCES
-            </button>
-            
-            <div id="resource-links" class="hidden">
-                <div class="card" style="padding: 1.2rem; background: rgba(0,0,0,0.2);">
-                    <h2>Resources</h2>
-                    <button class="res-btn" onclick="window.open('https://cas.mitwpu.edu.in/')">MIT-WPU CAS</button>
-                    <button class="res-btn" onclick="window.open('https://chatgpt.com')">AI Research</button>
-					 <button class="res-btn" onclick="window.open('https://www.youtube.com')">YouTube</button>
-                    <button class="res-btn" onclick="window.open('https://mitwpu.edu.in/life-wpu/library')">Digital Library</button>
+            <div class="accordion">
+                <button class="acc-btn" onclick="toggleAccordion(this)">
+                    <span>TIMELINE</span>
+                    <span style="font-size:0.6rem">▼</span>
+                </button>
+                <div class="acc-content">
+                    <div class="acc-inner">
+                        <div style="line-height: 1.6;">
+                            • Sem 2 starts: <b>5th Jan 26</b><br>
+                            • Mid-Term: <b>9th-20th Mar</b><br>
+                            • End Term: <b>14th May-15th Jun</b>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <button onclick="logout()" style="background:var(--danger); color:white; font-size: 0.75rem; font-weight: 800; padding: 10px; border-radius: 12px; border:none; cursor:pointer; margin-top: auto;">LOGOUT SYSTEM</button>
+            <div class="accordion">
+                <button class="acc-btn" onclick="toggleAccordion(this)">
+                    <span>RESOURCES</span>
+                    <span style="font-size:0.6rem">▼</span>
+                </button>
+                <div class="acc-content">
+                    <div class="acc-inner" style="padding-top:10px">
+                        <button class="res-btn" onclick="window.open('https://cas.mitwpu.edu.in/')">MIT-WPU CAS</button>
+                        <button class="res-btn" onclick="window.open('https://chatgpt.com')">AI Research</button>
+                        <button class="res-btn" onclick="window.open('https://www.youtube.com')">YouTube</button>
+                        <button class="res-btn" onclick="window.open('https://mitwpu.edu.in/life-wpu/library')">Digital Library</button>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="logout()" style="background:var(--danger); color:white; font-size: 0.75rem; font-weight: 800; padding: 12px; border-radius: 12px; border:none; cursor:pointer; margin-top: auto;">LOGOUT SYSTEM</button>
         </aside>
 
         <main class="main-content">
@@ -164,7 +191,7 @@
             "Aditya Desai": "1262252456",
             "Anshaj Mishra": "1262251082",
             "Harshit Kulthe": "1272251187",
-			"Parth Dandnaik": "1262251050",
+			"Parth Dandnaik": "1262251050", 
             "Aditya Srivastava": "1262250553"
         };
         const subjects = ["Engineering Mechanics", "Electrical & Electronics", "Engineering Chemistry", "AI for Everyone", "Foundation of Peace", "Integral Calculus"];
@@ -177,7 +204,10 @@
 
         function togglePass() { const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; }
         
-        function toggleResources() { document.getElementById('resource-links').classList.toggle('hidden'); }
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            content.classList.toggle('show');
+        }
 
         function login() {
             const u = document.getElementById('username').value, p = document.getElementById('password').value;
@@ -273,4 +303,3 @@
     </script>
 </body>
 </html>
-
