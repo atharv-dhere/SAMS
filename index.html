@@ -7,116 +7,59 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1; 
-            --accent: #a855f7; 
-            --bg: #030712;
-            --card-bg: rgba(30, 41, 59, 0.6); 
-            --text-main: #f8fafc; 
-            --text-dim: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1); 
-            --success: #10b981; 
-            --danger: #ef4444;
+            --primary: #6366f1; --accent: #a855f7; --bg: #030712;
+            --card-bg: rgba(30, 41, 59, 0.6); --text-main: #f8fafc; --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1); --success: #10b981; --danger: #ef4444; --warning: #f59e0b;
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg); 
-            color: var(--text-main); 
-            margin: 0; 
-            display: flex; 
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 30%, #1e1b4b 0%, transparent 40%),
-                        radial-gradient(circle at 80% 70%, #2e1065 0%, transparent 40%);
-            z-index: -1;
-            animation: pulseBg 15s ease-in-out infinite alternate;
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; display: flex; min-height: 100vh; overflow-x: hidden; }
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 30%, #1e1b4b 0%, transparent 40%), radial-gradient(circle at 80% 70%, #2e1065 0%, transparent 40%); z-index: -1; animation: pulseBg 15s ease-in-out infinite alternate; }
         @keyframes pulseBg { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-
         .hidden { display: none !important; }
 
-        /* Login Screen - Glassmorphism */
-        #login-container { 
-            width: 100vw; height: 100vh; 
-            display: flex; justify-content: center; align-items: center; 
-            position: fixed; z-index: 1000;
-        }
-
-        .login-box {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 3.5rem 2.5rem;
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            width: 380px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-
-        .academic-icon {
-            width: 60px; height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 1.8rem;
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .login-box h1 { 
-            letter-spacing: 6px; font-size: 2.5rem; font-weight: 800; margin: 0; 
-            background: linear-gradient(to bottom, #fff, #94a3b8);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        /* Input Styles */
+        /* --- LOGIN SCREEN --- */
+        #login-container { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: fixed; z-index: 1000; }
+        .login-box { background: var(--card-bg); backdrop-filter: blur(25px); padding: 3.5rem 2.5rem; border-radius: 32px; border: 1px solid var(--border); width: 380px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .academic-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.8rem; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+        .login-box h1 { letter-spacing: 8px; font-size: 2.5rem; font-weight: 800; margin: 0; background: linear-gradient(to bottom, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .input-group { position: relative; margin: 12px 0; }
-        input { 
-            width: 100%; padding: 14px; background: rgba(15, 23, 42, 0.7); 
-            border: 1px solid var(--border); border-radius: 12px; 
-            color: white; outline: none; transition: 0.3s; box-sizing: border-box;
-        }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2); }
-        
-        .pass-toggle {
-            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-            cursor: pointer; font-size: 0.7rem; color: var(--primary); font-weight: bold;
-        }
+        input { width: 100%; padding: 14px; background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border); border-radius: 12px; color: white; outline: none; transition: 0.3s; box-sizing: border-box; }
+        .pass-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 0.7rem; color: var(--primary); font-weight: bold; }
+        button { width: 100%; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: 0.3s; border: none; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
 
-        button { 
-            width: 100%; padding: 14px; border-radius: 12px; cursor: pointer; 
-            font-weight: 600; transition: 0.3s; border: none;
-        }
+        /* Login Footer Styles */
+        .login-footer { margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+        .dev-text { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 8px; opacity: 0.8; }
+        .dev-highlight { color: var(--primary); font-weight: 800; }
+        .login-quote { font-size: 0.75rem; color: var(--text-main); font-style: italic; opacity: 0.9; line-height: 1.4; padding: 0 10px; }
 
-        .btn-primary { 
-            background: linear-gradient(135deg, var(--primary), var(--accent)); color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-        }
-        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
-
-        /* Dashboard Layout */
-        #main-dashboard { display: grid; grid-template-columns: 280px 1fr; width: 100%; }
-        .sidebar { background: rgba(15, 23, 42, 0.9); border-right: 1px solid var(--border); padding: 2rem; display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; }
+        /* --- DASHBOARD --- */
+        #main-dashboard { display: grid; grid-template-columns: 300px 1fr; width: 100%; }
+        .sidebar { background: rgba(15, 23, 42, 0.95); border-right: 1px solid var(--border); padding: 2rem; display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; overflow-y: auto; }
         .main-content { padding: 2rem; overflow-y: auto; }
-        
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .card { 
-            background: var(--card-bg); padding: 1.5rem; border-radius: 20px; 
-            border: 1px solid var(--border); backdrop-filter: blur(10px);
-        }
+        .card { background: var(--card-bg); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border); backdrop-filter: blur(10px); margin-bottom: 1.5rem; }
+        h2 { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 1.2rem; font-weight: 800; }
 
-        h2 { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.2rem; }
-        .timer-display { font-size: 3rem; font-weight: 800; text-align: center; margin: 15px 0; font-family: monospace; color: var(--success); text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
-        .attendance-card { background: rgba(15, 23, 42, 0.5); padding: 18px; border-radius: 15px; border: 1px solid var(--border); transition: 0.3s; }
-        .attendance-card:hover { border-color: var(--primary); }
-        .list-item { background: rgba(15, 23, 42, 0.5); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); }
+        /* --- TIMETABLE --- */
+        .tt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .tt-day { background: rgba(22, 25, 48, 0.5); border: 1px solid var(--border); padding: 1.5rem; border-radius: 24px; min-height: 200px; }
+        .tt-day.active-day { border: 2px solid var(--accent); background: rgba(45, 27, 105, 0.4); }
+        .tt-day h3 { font-size: 1.1rem; margin-top: 0; margin-bottom: 1.5rem; color: #fff; font-weight: 600; }
+        .tt-slot { margin-bottom: 1rem; }
+        .tt-time { font-size: 0.75rem; color: var(--text-dim); display: block; margin-bottom: 2px; }
+        .tt-subject { font-size: 0.85rem; font-weight: 500; color: #fff; }
+
+        /* --- SIDEBAR BUTTONS --- */
+        .res-btn { background: rgba(255, 255, 255, 0.05); color: var(--text-main); text-align: left; padding: 10px 14px; margin-bottom: 8px; font-size: 0.8rem; border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; transition: 0.2s; cursor: pointer; border-radius: 10px; }
+        .res-btn:hover { background: rgba(99, 102, 241, 0.1); border-color: var(--primary); transform: translateX(5px); }
+
+        /* --- COMPONENTS --- */
+        .attendance-card { background: rgba(15, 23, 42, 0.4); padding: 1.2rem; border-radius: 18px; border: 1px solid var(--border); }
+        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin: 12px 0; }
+        .progress-bar { height: 100%; width: 0%; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 10px; }
+        .list-item { background: rgba(15, 23, 42, 0.4); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -127,224 +70,208 @@
         <div class="login-box">
             <div class="academic-icon">🎓</div>
             <h1>SAMS</h1>
-            <p style="color: var(--text-dim); margin-bottom: 2rem; font-size: 0.8rem; letter-spacing: 1px;">STUDENT ACADEMIC MONITOR</p>
-            
-            <div class="input-group">
-                <input type="text" id="username" placeholder="Username">
-            </div>
+            <p style="color: var(--text-dim); margin-bottom: 2rem; font-size: 0.75rem; letter-spacing: 2px;">STUDENT ACADEMIC MONITOR</p>
+            <div class="input-group"><input type="text" id="username" placeholder="Username"></div>
             <div class="input-group">
                 <input type="password" id="password" placeholder="Password">
                 <span class="pass-toggle" onclick="togglePass()">SHOW</span>
             </div>
-            
             <button class="btn-primary" onclick="login()">Enter System</button>
             <p id="login-error" style="color: var(--danger); font-size: 0.8rem; margin-top: 15px;"></p>
-            
-            <div style="margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
-                <p id="quote" style="color: var(--text-dim); font-size: 0.75rem; font-style: italic; margin-bottom: 1rem;"></p>
-                <p style="color: var(--text-dim); font-size: 0.65rem; opacity: 0.5;">Developed by Atharv Dhere X Gemini</p>
+
+            <div class="login-footer">
+                <p class="dev-text">DEVELOPED BY <span class="dev-highlight">ATHARV DHERE X GEMINI</span></p>
+                <p id="login-quote" class="login-quote"></p>
             </div>
         </div>
     </div>
 
     <div id="main-dashboard" class="hidden">
         <aside class="sidebar">
-            <h1 id="user-display" style="font-size: 1.5rem; margin-bottom: 5px; color: white;">User</h1>
-            <p style="color: var(--primary); font-size: 0.7rem; font-weight: 800; margin-bottom: 2rem; letter-spacing: 1px;">SAMS PRO v3.5</p>
+            <h1 id="user-display" style="font-size: 1.5rem; margin: 0; color: white;">User</h1>
+            <p style="color: var(--primary); font-size: 0.65rem; font-weight: 800; margin-bottom: 2rem; letter-spacing: 2px;">FY MECH ROBO • SEM II</p>
             
-            <div class="card" style="margin-bottom: 1rem; padding: 1rem;">
-                <h2>⏱ Focus</h2>
-                <div class="timer-display" id="timer">25:00</div>
-                <div style="display:flex; gap:8px;">
-                    <button onclick="startTimer()" style="background: var(--success); color: white; padding: 10px;">Start</button>
-                    <button onclick="resetTimer()" style="background: var(--danger); color: white; padding: 10px;">Reset</button>
-                </div>
+            <div class="card" style="padding: 1.2rem; background: rgba(0,0,0,0.2);">
+                <h2>Resources</h2>
+                <button class="res-btn" onclick="window.open('https://cas.mitwpu.edu.in/')">🏛 MIT-WPU CAS</button>
+                <button class="res-btn" onclick="window.open('https://chatgpt.com')">🤖 AI Research</button>
+                <button class="res-btn" onclick="window.open('https://www.youtube.com')">📺 YouTube</button>
+                <button class="res-btn" onclick="window.open('https://mitwpu.edu.in/life-wpu/library')">📖 Digital Library</button>
             </div>
 
-            <div class="card" style="padding: 1rem;">
-                <h2>🔗 Links</h2>
-                <button onclick="window.open('https://cas.mitwpu.edu.in/')" style="background:rgba(255,255,255,0.05); color:white; margin-bottom:8px; font-size:0.8rem; text-align: left;">MIT-WPU CAS</button>
-                <button onclick="window.open('https://chatgpt.com')" style="background:rgba(255,255,255,0.05); color:white; font-size:0.8rem; text-align: left;">AI Research</button>
-            </div>
-
-            <button onclick="logout()" style="background:none; border:1px solid var(--danger); color:var(--danger); margin-top:auto;">Logout</button>
+            <button onclick="logout()" style="background:var(--danger); color:white; font-size: 0.75rem; font-weight: 800; padding: 10px; border-radius: 12px; border:none; cursor:pointer; margin-top: auto;">LOGOUT SYSTEM</button>
         </aside>
 
         <main class="main-content">
+            <h2 style="margin-bottom: 1.5rem;">Academic Schedule</h2>
+            <div class="tt-grid">
+                <div class="tt-day" id="day-1"><h3>Mon</h3><div class="tt-slot"><span class="tt-time">08:30</span><span class="tt-subject">EMT (T)</span></div><div class="tt-slot"><span class="tt-time">09:30</span><span class="tt-subject">CIV (P)</span></div></div>
+                <div class="tt-day" id="day-2"><h3>Tue</h3><div class="tt-slot"><span class="tt-time">08:30</span><span class="tt-subject">ECE (T)</span></div><div class="tt-slot"><span class="tt-time">09:30</span><span class="tt-subject">EMT (T)</span></div><div class="tt-slot"><span class="tt-time">10:45</span><span class="tt-subject">MEC (P)</span></div></div>
+                <div class="tt-day" id="day-3"><h3>Wed</h3><div class="tt-slot"><span class="tt-time">08:30</span><span class="tt-subject">YOG (P)</span></div><div class="tt-slot"><span class="tt-time">09:30</span><span class="tt-subject">EMT (T)</span></div><div class="tt-slot"><span class="tt-time">10:45</span><span class="tt-subject">ECE (T)</span></div></div>
+                <div class="tt-day" id="day-4"><h3>Thu</h3><div class="tt-slot"><span class="tt-time">08:30</span><span class="tt-subject">CIV (T)</span></div><div class="tt-slot"><span class="tt-time">09:30</span><span class="tt-subject">CHM (P)</span></div></div>
+                <div class="tt-day" id="day-5"><h3>Fri</h3><div class="tt-slot"><span class="tt-time">09:30</span><span class="tt-subject">EMT (T)</span></div><div class="tt-slot"><span class="tt-time">10:45</span><span class="tt-subject">CIV (T)</span></div><div class="tt-slot"><span class="tt-time">11:45</span><span class="tt-subject">ECE (P)</span></div></div>
+            </div>
+
             <div class="grid">
                 <div class="card" style="grid-column: 1 / -1;">
-                    <h2>📈 Attendance Tracker (80% Goal)</h2>
+                    <h2>Attendance tracker</h2>
                     <div id="attendance-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;"></div>
                 </div>
 
                 <div class="card">
-                    <h2>💰 Finance</h2>
-                    <input type="text" id="exp-name" placeholder="Expense Item">
-                    <input type="number" id="exp-amt" placeholder="Amount (₹)" style="margin-top:8px;">
-                    <button class="btn-primary" onclick="addExpense()" style="margin-top:12px; padding: 10px;">Add Entry</button>
-                    <div id="expense-list" style="margin-top:20px;"></div>
+                    <h2>Subject notes</h2>
+                    <div id="subject-notes-container"></div>
                 </div>
 
                 <div class="card">
-                    <h2>✅ Task Board</h2>
-                    <input type="text" id="todo-input" placeholder="What needs to be done?">
-                    <button class="btn-primary" onclick="addTask()" style="margin-top:12px; padding: 10px;">Create Task</button>
-                    <div id="todo-list" style="margin-top:20px;"></div>
-                </div>
-
-                <div class="card" style="grid-column: 1 / -1;">
-                    <h2>📚 Subject Workload</h2>
-                    <div id="subject-workload-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;"></div>
+                    <h2>Finance & Tasks</h2>
+                    <input type="text" id="todo-input" placeholder="New Task...">
+                    <button class="btn-primary" onclick="addTask()" style="margin: 10px 0;">Add Task</button>
+                    <div id="todo-list" style="margin-bottom: 2rem;"></div>
+                    
+                    <input type="number" id="exp-amt" placeholder="Expense Amount (₹)">
+                    <button class="btn-primary" onclick="addExpense()" style="margin-top: 10px;">Log Expense</button>
+                    <div id="expense-list" style="margin-top: 15px;"></div>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        const users = {
-            "Atharv Dhere": ["1262250205", "1262250204"],
-            "Aryan Lole": "1262253709",
-            "Pavan Dhulipala": "1262252556",
-            "Shubham Rathor": "1262252788",
-            "Aditya Desai": "1262252456"
+        const users = { "Atharv Dhere": ["1262250205", "1262250204"], "Aryan Lole": "1262253709", "Pavan Dhulipala": "1262252556", "Shubham Rathor": "1262252788", "Aditya Desai": "1262252456" };
+        const subjects = ["Engineering Mechanics", "Electrical & Electronics", "Engineering Chemistry", "AI for Everyone", "Foundation of Peace", "Integral Calculus"];
+        const quotes = [
+            "The secret of getting ahead is getting started.",
+            "Don't stop until you're proud.",
+            "Success is the sum of small efforts repeated daily.",
+            "Your future is created by what you do today.",
+            "Focus on being productive instead of busy.",
+            "Believe in yourself and you're halfway there."
+        ];
+
+        let currentUser = "";
+
+        // Set quote on load
+        window.onload = () => {
+            document.getElementById('login-quote').innerText = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`;
         };
 
-        const subjects = ["Engineering Mechanics", "Electrical & Electronics Engineering", "Engineering Chemistry", "AI for Everyone", "Foundation of Peace", "Indian Knowledge System", "Integral Calculus"];
-        const quotes = ["\"Success is the sum of small efforts repeated daily.\"", "\"Don't stop until you're proud.\"", "\"Focus on progress, not perfection.\"", "\"Your future is created by what you do today.\""];
-        
-        let timerInterval, timeLeft = 1500;
-
-        // Init UI
-        document.getElementById('quote').innerText = quotes[Math.floor(Math.random()*quotes.length)];
-
-        function togglePass() {
-            const p = document.getElementById('password');
-            p.type = p.type === 'password' ? 'text' : 'password';
-        }
+        function togglePass() { const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; }
 
         function login() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            const auth = Array.isArray(users[u]) ? users[u].includes(p) : users[u] === p;
-
-            if(auth) {
+            const u = document.getElementById('username').value, p = document.getElementById('password').value;
+            if(users[u] && (Array.isArray(users[u]) ? users[u].includes(p) : users[u] === p)) {
+                currentUser = u;
                 document.getElementById('login-container').classList.add('hidden');
                 document.getElementById('main-dashboard').classList.remove('hidden');
                 document.getElementById('user-display').innerText = u;
-                initDashboard();
-            } else {
-                document.getElementById('login-error').innerText = "Invalid Credentials";
-            }
+                initDashboard(); loadData();
+            } else { document.getElementById('login-error').innerText = "Access Denied"; }
         }
-
-        function logout() { location.reload(); }
 
         function initDashboard() {
             const attGrid = document.getElementById('attendance-grid');
-            const workGrid = document.getElementById('subject-workload-grid');
-            attGrid.innerHTML = ''; workGrid.innerHTML = '';
-
+            const noteGrid = document.getElementById('subject-notes-container');
+            attGrid.innerHTML = ''; noteGrid.innerHTML = '';
+            
             subjects.forEach(sub => {
                 const id = sub.replace(/\s/g,'');
                 attGrid.innerHTML += `
                     <div class="attendance-card">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
                             <b style="font-size:0.85rem;">${sub}</b>
-                            <span id="perc-${id}" style="color:var(--primary); font-weight:800; font-size:1.1rem;">0%</span>
+                            <span id="perc-${id}" style="font-weight:800; color:var(--primary);">0%</span>
                         </div>
-                        <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:12px;">
-                            Present: <span id="pres-${id}" style="color:white">0</span> | Total: <span id="tot-${id}" style="color:white">0</span>
-                        </div>
-                        <div id="stat-${id}" style="font-size:0.7rem; margin-bottom:15px; font-weight:bold; letter-spacing:0.5px;">No record found</div>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr 40px; gap:8px;">
-                            <button onclick="updateAtt('${sub}', true)" style="background:var(--success); color:white; font-size:0.65rem; padding:8px;">PRESENT</button>
-                            <button onclick="updateAtt('${sub}', false)" style="background:var(--danger); color:white; font-size:0.65rem; padding:8px;">ABSENT</button>
-                            <button onclick="resetAtt('${sub}')" style="background:rgba(255,255,255,0.1); color:white; padding:8px;">↺</button>
+                        <div class="progress-container"><div id="bar-${id}" class="progress-bar" style="background:var(--primary)"></div></div>
+                        <div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:12px;">P: <span id="pres-${id}">0</span> | T: <span id="tot-${id}">0</span></div>
+                        <div id="stat-${id}" style="font-size:0.65rem; font-weight:800; margin-bottom:15px;">-</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 40px; gap:6px;">
+                            <button onclick="updateAtt('${sub}', true)" style="background:var(--success); color:white; font-size:0.6rem; padding:8px;">PRESENT</button>
+                            <button onclick="updateAtt('${sub}', false)" style="background:var(--danger); color:white; font-size:0.6rem; padding:8px;">ABSENT</button>
+                            <button onclick="resetAtt('${sub}')" style="background:rgba(255,255,255,0.1); padding:8px;">↺</button>
                         </div>
                     </div>`;
-
-                workGrid.innerHTML += `
-                    <div class="attendance-card">
-                        <b style="font-size:0.8rem; color:var(--accent);">${sub}</b>
-                        <input id="in-work-${id}" placeholder="Task details..." style="font-size:0.75rem; margin-top:10px;">
-                        <button class="btn-primary" onclick="addWork('${sub}')" style="margin-top:8px; padding:6px; font-size:0.7rem;">ADD TASK</button>
-                        <div id="list-work-${id}" style="margin-top:12px;"></div>
+                
+                noteGrid.innerHTML += `
+                    <div style="margin-bottom:1.5rem;">
+                        <label style="font-size:0.7rem; color:var(--accent); font-weight:800; display:block; margin-bottom:5px;">${sub}</label>
+                        <div style="display:flex; gap:5px;">
+                            <input id="note-in-${id}" placeholder="Type note..." style="padding:8px; font-size:0.8rem;">
+                            <button onclick="addNote('${sub}')" style="background:var(--primary); width:auto; padding:0 15px; font-size:0.7rem;">SAVE</button>
+                        </div>
+                        <div id="note-list-${id}" style="margin-top:10px;"></div>
                     </div>`;
             });
+            const d = new Date().getDay(); if(d >=1 && d<=5) document.getElementById(`day-${d}`).classList.add('active-day');
         }
 
-        function updateAtt(sub, isPresent) {
+        function updateAtt(sub, isP, silent=false) {
             const id = sub.replace(/\s/g,'');
-            let p = parseInt(document.getElementById(`pres-${id}`).innerText);
-            let t = parseInt(document.getElementById(`tot-${id}`).innerText);
-            isPresent ? p++ : null; t++;
-            const perc = ((p/t)*100).toFixed(1);
-            document.getElementById(`pres-${id}`).innerText = p;
-            document.getElementById(`tot-${id}`).innerText = t;
+            let p = parseInt(document.getElementById(`pres-${id}`).innerText), t = parseInt(document.getElementById(`tot-${id}`).innerText);
+            if(!silent) { if(isP) p++; t++; }
+            const perc = t>0 ? ((p/t)*100).toFixed(1) : 0;
+            document.getElementById(`pres-${id}`).innerText = p; document.getElementById(`tot-${id}`).innerText = t;
             document.getElementById(`perc-${id}`).innerText = perc + "%";
-            const status = document.getElementById(`stat-${id}`);
-            if(perc < 80) {
-                const needed = Math.ceil((0.8 * t - p) / 0.2);
-                status.innerText = `⚠️ NEED ${needed} CLASSES`;
-                status.style.color = "var(--danger)";
-            } else {
-                const canSkip = Math.floor((p / 0.8) - t);
-                status.innerText = canSkip > 0 ? `✅ CAN SKIP ${canSkip} CLASSES` : "🎯 AT LIMIT";
-                status.style.color = "var(--success)";
+            const bar = document.getElementById(`bar-${id}`), stat = document.getElementById(`stat-${id}`);
+            bar.style.width = perc + "%";
+            if(perc < 80) { 
+                const n = Math.ceil((0.8*t - p)/0.2); stat.innerText = `NEED ${n} CLASSES`; stat.style.color = "var(--danger)"; bar.style.background="var(--danger)";
+            } else { 
+                const s = Math.floor(p/0.8 - t); stat.innerText = s>0 ? `CAN SKIP ${s}` : "SAFE"; stat.style.color = "var(--success)"; bar.style.background="var(--success)";
             }
+            if(!silent) saveData();
         }
 
-        function resetAtt(sub) {
-            const id = sub.replace(/\s/g,'');
-            document.getElementById(`pres-${id}`).innerText="0"; 
-            document.getElementById(`tot-${id}`).innerText="0";
-            document.getElementById(`perc-${id}`).innerText="0%"; 
-            document.getElementById(`stat-${id}`).innerText="No record found";
-            document.getElementById(`stat-${id}`).style.color = "var(--text-dim)";
-        }
-
-        function addWork(sub) {
-            const id = sub.replace(/\s/g,''); 
-            const val = document.getElementById(`in-work-${id}`).value;
+        function addNote(sub) {
+            const id = sub.replace(/\s/g,''), val = document.getElementById(`note-in-${id}`).value;
             if(!val) return;
             const div = document.createElement('div'); div.className = 'list-item';
-            div.innerHTML = `<span>${val}</span><span onclick="this.parentElement.remove()" style="cursor:pointer; color:var(--danger)">×</span>`;
-            document.getElementById(`list-work-${id}`).appendChild(div);
-            document.getElementById(`in-work-${id}`).value = '';
+            div.innerHTML = `<span>${val}</span><span onclick="this.parentElement.remove(); saveData();" style="cursor:pointer; color:var(--danger)">×</span>`;
+            document.getElementById(`note-list-${id}`).prepend(div);
+            document.getElementById(`note-in-${id}`).value = ''; saveData();
         }
 
-        function addExpense() {
-            const n = document.getElementById('exp-name').value; 
-            const a = document.getElementById('exp-amt').value;
-            if(!n || !a) return;
-            const div = document.createElement('div'); div.className = 'list-item';
-            div.innerHTML = `<span>${n}</span><b style="color:var(--success)">₹${a}</b>`;
-            document.getElementById('expense-list').prepend(div);
-            document.getElementById('exp-name').value = ''; 
-            document.getElementById('exp-amt').value = '';
+        function saveData() {
+            const data = { attendance: {}, notes: {}, tasks: document.getElementById('todo-list').innerHTML, expenses: document.getElementById('expense-list').innerHTML };
+            subjects.forEach(sub => {
+                const id = sub.replace(/\s/g,'');
+                data.attendance[id] = { p: document.getElementById(`pres-${id}`).innerText, t: document.getElementById(`tot-${id}`).innerText };
+                data.notes[id] = document.getElementById(`note-list-${id}`).innerHTML;
+            });
+            localStorage.setItem(`sams_final_v45_${currentUser}`, JSON.stringify(data));
         }
 
-        function addTask() {
-            const v = document.getElementById('todo-input').value;
-            if(!v) return;
-            const div = document.createElement('div'); div.className = 'list-item';
-            div.innerHTML = `<span>${v}</span><span onclick="this.parentElement.remove()" style="cursor:pointer; color:var(--danger)">×</span>`;
-            document.getElementById('todo-list').prepend(div);
-            document.getElementById('todo-input').value = '';
+        function loadData() {
+            const saved = localStorage.getItem(`sams_final_v45_${currentUser}`); if(!saved) return;
+            const data = JSON.parse(saved);
+            Object.keys(data.attendance).forEach(id => {
+                if(document.getElementById(`pres-${id}`)) {
+                    document.getElementById(`pres-${id}`).innerText = data.attendance[id].p;
+                    document.getElementById(`tot-${id}`).innerText = data.attendance[id].t;
+                    updateAtt(id, false, true);
+                    if(data.notes[id]) document.getElementById(`note-list-${id}`).innerHTML = data.notes[id];
+                }
+            });
+            document.getElementById('todo-list').innerHTML = data.tasks || "";
+            document.getElementById('expense-list').innerHTML = data.expenses || "";
         }
 
-        function startTimer() {
-            if(timerInterval) return;
-            timerInterval = setInterval(() => {
-                timeLeft--; updateTimerDisplay();
-                if(timeLeft <= 0) { clearInterval(timerInterval); alert("Session Complete!"); resetTimer(); }
-            }, 1000);
+        function addTask() { 
+            const v = document.getElementById('todo-input').value; if(!v) return;
+            const d = document.createElement('div'); d.className = 'list-item';
+            d.innerHTML = `<span>${v}</span><span onclick="this.parentElement.remove(); saveData();" style="cursor:pointer; color:var(--danger)">×</span>`;
+            document.getElementById('todo-list').prepend(d); document.getElementById('todo-input').value = ''; saveData();
         }
-        function resetTimer() { clearInterval(timerInterval); timerInterval = null; timeLeft = 1500; updateTimerDisplay(); }
-        function updateTimerDisplay() {
-            const m = Math.floor(timeLeft/60), s = timeLeft%60;
-            document.getElementById('timer').innerText = `${m}:${s<10?'0'+s:s}`;
+
+        function addExpense() { 
+            const v = document.getElementById('exp-amt').value; if(!v) return;
+            const d = document.createElement('div'); d.className = 'list-item';
+            d.innerHTML = `<span>Logged Expense</span><b>₹${v}</b>`;
+            document.getElementById('expense-list').prepend(d); document.getElementById('exp-amt').value = ''; saveData();
         }
+
+        function logout() { location.reload(); }
+        function resetAtt(sub) { const id = sub.replace(/\s/g,''); document.getElementById(`pres-${id}`).innerText="0"; document.getElementById(`tot-${id}`).innerText="0"; updateAtt(sub, false, true); saveData(); }
     </script>
 </body>
 </html>
