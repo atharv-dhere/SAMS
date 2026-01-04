@@ -40,51 +40,19 @@
         
         /* --- SIDE SWIPE MENU --- */
         .sidebar { 
-            position: fixed; 
-            top: 0; 
-            left: -300px; 
-            width: 300px; 
-            height: 100vh; 
-            background: rgba(15, 23, 42, 0.98); 
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border); 
-            padding: 1.5rem; 
-            display: flex; 
-            flex-direction: column; 
-            z-index: 2000; 
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            gap: 10px; 
-            box-sizing: border-box;
+            position: fixed; top: 0; left: -300px; width: 300px; height: 100vh; background: rgba(15, 23, 42, 0.98); 
+            backdrop-filter: blur(20px); border-right: 1px solid var(--border); padding: 1.5rem; display: flex; 
+            flex-direction: column; z-index: 2000; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); gap: 10px; box-sizing: border-box;
         }
         .sidebar.open { transform: translateX(300px); }
-        
-        .menu-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.5);
-            z-index: 1999;
-            display: none;
-        }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 1999; display: none; }
         .menu-overlay.show { display: block; }
 
         .main-content { padding: 5rem 2rem 2rem 2rem; overflow-y: auto; }
-        
         .menu-toggle-btn {
-            position: fixed;
-            top: 1.5rem;
-            left: 1.5rem;
-            z-index: 1500;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            font-weight: 800;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
+            position: fixed; top: 1.5rem; left: 1.5rem; z-index: 1500; background: var(--card-bg); border: 1px solid var(--border);
+            color: white; padding: 10px 15px; border-radius: 12px; cursor: pointer; backdrop-filter: blur(10px); font-weight: 800;
+            font-size: 0.7rem; letter-spacing: 1px;
         }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
@@ -97,6 +65,7 @@
         .acc-content.show { max-height: 300px; padding-bottom: 10px; }
         .acc-inner { padding: 0 14px 10px 14px; font-size: 0.75rem; color: var(--text-dim); }
 
+        /* --- TIMETABLE --- */
         .tt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
         .tt-day { background: rgba(22, 25, 48, 0.5); border: 1px solid var(--border); padding: 1.5rem; border-radius: 24px; min-height: 200px; }
         .tt-day.active-day { border: 2px solid var(--accent); background: rgba(45, 27, 105, 0.4); }
@@ -112,6 +81,19 @@
         .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin: 12px 0; }
         .progress-bar { height: 100%; width: 0%; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 10px; }
         .list-item { background: rgba(15, 23, 42, 0.4); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); font-size: 0.85rem; }
+
+        /* --- AI CHATBOT UI --- */
+        #ai-chat-bubble { position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5); z-index: 3000; transition: 0.3s; }
+        #ai-chat-bubble:hover { transform: scale(1.1) rotate(5deg); }
+        #ai-chat-window { position: fixed; bottom: 100px; right: 25px; width: 350px; height: 500px; background: var(--card-bg); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 24px; z-index: 3000; display: flex; flex-direction: column; box-shadow: 0 20px 40px rgba(0,0,0,0.6); overflow: hidden; }
+        .chat-header { padding: 1.2rem; background: rgba(255,255,255,0.05); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { padding: 10px 14px; border-radius: 15px; font-size: 0.8rem; max-width: 85%; line-height: 1.4; word-wrap: break-word; }
+        .msg-ai { background: rgba(255,255,255,0.1); border: 1px solid var(--border); align-self: flex-start; color: var(--text-main); }
+        .msg-user { background: var(--primary); align-self: flex-end; color: white; }
+        .chat-input-area { padding: 1rem; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); display: flex; gap: 8px; }
+        .chat-input-area input { padding: 10px; font-size: 0.8rem; flex: 1; }
+        .chat-input-area button { width: auto; padding: 0 15px; background: var(--primary); color: white; border-radius: 10px; cursor: pointer; border:none; }
     </style>
 </head>
 <body>
@@ -144,6 +126,21 @@
 
     <div id="main-dashboard" class="hidden">
         <button class="menu-toggle-btn" onclick="toggleMenu()">☰ MENU</button>
+
+        <div id="ai-chat-bubble" onclick="toggleAIChat()">🤖</div>
+        <div id="ai-chat-window" class="hidden">
+            <div class="chat-header">
+                <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;">EVRY ASSISTANT</span>
+                <span onclick="toggleAIChat()" style="cursor: pointer; opacity: 0.5;">×</span>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <div class="chat-msg msg-ai">System Online. I am EVRY, your Academic Assistant. How can I help with SAMS today?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about schedule or exams..." onkeypress="if(event.key==='Enter') sendChat()">
+                <button onclick="sendChat()">SEND</button>
+            </div>
+        </div>
 
         <aside class="sidebar" id="sidebar">
             <div class="accordion">
@@ -266,6 +263,7 @@
     </div>
 
     <script>
+        /* --- GLOBAL DATA --- */
         const users = { 
             "Atharv Dhere": ["1262250205", "1262250204"], 
             "Aryan Lole": "1262253709", 
@@ -284,6 +282,7 @@
 
         let currentUser = "";
 
+        /* --- CORE SYSTEM --- */
         window.onload = () => { 
             document.getElementById('login-quote').innerText = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`; 
             checkSession(); 
@@ -291,24 +290,7 @@
 
         function checkSession() {
             const savedSession = sessionStorage.getItem("sams_active_user");
-            if(savedSession) {
-                currentUser = savedSession;
-                enterDashboard();
-            }
-        }
-
-        function togglePass() { const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; }
-
-        function toggleMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('menu-overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        function toggleAccordion(btn) {
-            const content = btn.nextElementSibling;
-            content.classList.toggle('show');
+            if(savedSession) { currentUser = savedSession; enterDashboard(); }
         }
 
         function login() {
@@ -327,10 +309,10 @@
             initDashboard(); loadData(); updateRemainingDays();
         }
 
-        function logout() { 
-            sessionStorage.removeItem("sams_active_user"); 
-            location.reload(); 
-        }
+        function logout() { sessionStorage.removeItem("sams_active_user"); location.reload(); }
+        function togglePass() { const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; }
+        function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('menu-overlay').classList.toggle('show'); }
+        function toggleAccordion(btn) { btn.nextElementSibling.classList.toggle('show'); }
 
         function updateRemainingDays() {
             const diff = SEM_END_DATE - new Date();
@@ -338,25 +320,22 @@
             document.getElementById('days-remaining').innerText = days > 0 ? `${days} DAYS UNTIL MAY 9` : "TERM ENDED";
         }
 
+        /* --- DASHBOARD RENDER --- */
         function initDashboard() {
             const attGrid = document.getElementById('attendance-grid'), noteGrid = document.getElementById('subject-notes-container');
             attGrid.innerHTML = ''; noteGrid.innerHTML = '';
             
             subjects.forEach((sub, index) => {
                 const id = sub.replace(/\s/g,'');
-                // Determine color based on index for the buttons
                 const themeColor = index % 2 === 0 ? 'var(--primary)' : 'var(--accent)';
                 
-                // Attendance Card with ABSENT count
                 attGrid.innerHTML += `<div class="attendance-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <b style="font-size:0.85rem;">${sub}</b>
                         <span id="perc-${id}" style="font-weight:800; color:var(--primary);">0%</span>
                     </div>
                     <div class="progress-container"><div id="bar-${id}" class="progress-bar" style="background:var(--primary)"></div></div>
-                    <div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:12px;">
-                        P: <span id="pres-${id}">0</span> | A: <span id="absent-${id}">0</span> | T: <span id="tot-${id}">0</span>
-                    </div>
+                    <div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:12px;">P: <span id="pres-${id}">0</span> | A: <span id="absent-${id}">0</span> | T: <span id="tot-${id}">0</span></div>
                     <div id="stat-${id}" style="font-size:0.65rem; font-weight:800; margin-bottom:15px;">-</div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr 40px; gap:6px;">
                         <button onclick="updateAtt('${sub}', true)" style="background:var(--success); color:white; font-size:0.6rem; padding:8px;">PRESENT</button>
@@ -365,37 +344,29 @@
                     </div>
                 </div>`;
                 
-                // Subject Note with WHITE text on COLOR background
                 noteGrid.innerHTML += `<div style="margin-bottom:1.5rem;">
                     <label style="font-size:0.7rem; color:var(--accent); font-weight:800; display:block; margin-bottom:5px;">${sub}</label>
                     <div style="display:flex; gap:5px;">
                         <input id="note-in-${id}" placeholder="Type note..." style="padding:8px; font-size:0.8rem;">
-                        <button onclick="addNote('${sub}')" style="background:${themeColor}; color:white; width:auto; padding:0 15px; font-size:0.7rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">SAVE</button>
+                        <button onclick="addNote('${sub}')" style="background:${themeColor}; color:white; width:auto; padding:0 15px; font-size:0.7rem;">SAVE</button>
                     </div>
                     <div id="note-list-${id}" style="margin-top:10px;"></div>
                 </div>`;
             });
 
-            const d = new Date().getDay(); if(d >=1 && d<=5) {
-                const dayEl = document.getElementById(`day-${d}`);
-                if(dayEl) dayEl.classList.add('active-day');
-            }
+            const d = new Date().getDay(); 
+            if(d >= 1 && d <= 5) document.getElementById(`day-${d}`).classList.add('active-day');
         }
 
+        /* --- DATA PERSISTENCE --- */
         function updateAtt(sub, isP, silent=false) {
-            if (new Date() > SEM_END_DATE && !silent) { alert("Instructional period ended (May 9). Attendance is locked."); return; }
+            if (new Date() > SEM_END_DATE && !silent) { alert("Instructional period ended. Attendance is locked."); return; }
             const id = sub.replace(/\s/g,'');
-            
             let p = parseInt(document.getElementById(`pres-${id}`).innerText);
             let a = parseInt(document.getElementById(`absent-${id}`).innerText);
             let t = parseInt(document.getElementById(`tot-${id}`).innerText);
             
-            if(!silent) { 
-                if(isP) p++; 
-                else a++;
-                t++; 
-            }
-            
+            if(!silent) { if(isP) p++; else a++; t++; }
             const perc = t>0 ? ((p/t)*100).toFixed(1) : 0;
             document.getElementById(`pres-${id}`).innerText = p;
             document.getElementById(`absent-${id}`).innerText = a;
@@ -404,38 +375,21 @@
             
             const bar = document.getElementById(`bar-${id}`), stat = document.getElementById(`stat-${id}`);
             bar.style.width = perc + "%";
-            
             if(perc < 80) { 
                 const n = Math.ceil((0.8*t - p)/0.2); 
-                stat.innerText = `NEED ${n} CLASSES`; 
-                stat.style.color = "var(--danger)"; 
-                bar.style.background="var(--danger)"; 
-            }
-            else { 
+                stat.innerText = `NEED ${n} CLASSES`; stat.style.color = "var(--danger)"; bar.style.background="var(--danger)"; 
+            } else { 
                 const s = Math.floor(p/0.8 - t); 
-                stat.innerText = s>0 ? `CAN SKIP ${s}` : "SAFE"; 
-                stat.style.color = "var(--success)"; 
-                bar.style.background="var(--success)"; 
+                stat.innerText = s>0 ? `CAN SKIP ${s}` : "SAFE"; stat.style.color = "var(--success)"; bar.style.background="var(--success)"; 
             }
             if(!silent) saveData();
-        }
-
-        function addNote(sub) {
-            const id = sub.replace(/\s/g,''), val = document.getElementById(`note-in-${id}`).value; if(!val) return;
-            const div = document.createElement('div'); div.className = 'list-item';
-            div.innerHTML = `<span>${val}</span><span onclick="this.parentElement.remove(); saveData();" style="cursor:pointer; color:var(--danger)">×</span>`;
-            document.getElementById(`note-list-${id}`).prepend(div); document.getElementById(`note-in-${id}`).value = ''; saveData();
         }
 
         function saveData() {
             const data = { attendance: {}, notes: {}, tasks: document.getElementById('todo-list').innerHTML, expenses: document.getElementById('expense-list').innerHTML };
             subjects.forEach(sub => {
                 const id = sub.replace(/\s/g,'');
-                data.attendance[id] = { 
-                    p: document.getElementById(`pres-${id}`).innerText, 
-                    a: document.getElementById(`absent-${id}`).innerText,
-                    t: document.getElementById(`tot-${id}`).innerText 
-                };
+                data.attendance[id] = { p: document.getElementById(`pres-${id}`).innerText, a: document.getElementById(`absent-${id}`).innerText, t: document.getElementById(`tot-${id}`).innerText };
                 data.notes[id] = document.getElementById(`note-list-${id}`).innerHTML;
             });
             localStorage.setItem(`sams_v101_${currentUser}`, JSON.stringify(data));
@@ -457,31 +411,69 @@
             document.getElementById('expense-list').innerHTML = data.expenses || "";
         }
 
+        /* --- FEATURES --- */
+        function addNote(sub) {
+            const id = sub.replace(/\s/g,''), val = document.getElementById(`note-in-${id}`).value; if(!val) return;
+            const div = document.createElement('div'); div.className = 'list-item';
+            div.innerHTML = `<span>${val}</span><span onclick="this.parentElement.remove(); saveData();" style="cursor:pointer; color:var(--danger)">×</span>`;
+            document.getElementById(`note-list-${id}`).prepend(div); document.getElementById(`note-in-${id}`).value = ''; saveData();
+        }
         function addTask() { 
             const v = document.getElementById('todo-input').value; if(!v) return;
             const d = document.createElement('div'); d.className = 'list-item';
             d.innerHTML = `<span>${v}</span><span onclick="this.parentElement.remove(); saveData();" style="cursor:pointer; color:var(--danger)">×</span>`;
             document.getElementById('todo-list').prepend(d); document.getElementById('todo-input').value = ''; saveData();
         }
-
         function addExpense() { 
             const v = document.getElementById('exp-amt').value; if(!v) return;
             const d = document.createElement('div'); d.className = 'list-item';
             d.innerHTML = `<span>Logged Expense</span><b>₹${v}</b>`;
             document.getElementById('expense-list').prepend(d); document.getElementById('exp-amt').value = ''; saveData();
         }
-
         function resetAtt(sub) { 
-            const id = sub.replace(/\s/g,''); 
-            document.getElementById(`pres-${id}`).innerText="0"; 
-            document.getElementById(`absent-${id}`).innerText="0"; 
-            document.getElementById(`tot-${id}`).innerText="0"; 
-            updateAtt(sub, false, true); 
-            saveData(); 
+            const id = sub.replace(/\s/g,''); document.getElementById(`pres-${id}`).innerText="0"; document.getElementById(`absent-${id}`).innerText="0"; document.getElementById(`tot-${id}`).innerText="0"; 
+            updateAtt(sub, false, true); saveData(); 
         }
-        
-        function showLegal() {
-            alert("SAMS LEGAL NOTICE:\n\n1. SAMS is an independent student project and is not affiliated with MIT-WPU, the Government of Odisha (SAMS Odisha), or any official portal.\n\n2. Software provided 'as-is'. Developer not responsible for data loss.\n\n3. External links property of respective owners.");
+        function showLegal() { alert("SAMSbyAD LEGAL NOTICE:\n\n1. SAMS is an independent student project.\n2. Developer: Atharv Dhere x Evry.\n3. Data is stored locally in your browser."); }
+
+        /* --- LOCAL AI LOGIC (EVRY) --- */
+        function toggleAIChat() {
+            document.getElementById('ai-chat-window').classList.toggle('hidden');
+        }
+
+        function sendChat() {
+            const input = document.getElementById('chat-input');
+            const body = document.getElementById('chat-body');
+            const msg = input.value.trim().toLowerCase();
+            if(!msg) return;
+
+            body.innerHTML += `<div class="chat-msg msg-user">${input.value}</div>`;
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+
+            setTimeout(() => {
+                let response = "";
+                const academicKeywords = ["exam", "term", "subject", "study", "schedule", "timetable", "attendance", "calculus", "mechanics", "chemistry", "ieee", "yoga"];
+                const isAcademic = academicKeywords.some(keyword => msg.includes(keyword)) || msg.includes("hi") || msg.includes("hello");
+
+                if (isAcademic) {
+                    if (msg.includes("hi") || msg.includes("hello")) {
+                        response = `Greetings ${currentUser}. I am EVRY. How may I assist with your SAMS data?`;
+                    } else if (msg.includes("exam") || msg.includes("term")) {
+                        response = "Academic Timeline: Mid-Terms (Mar 9-20), End-Terms (May 14-Jun 15).";
+                    } else if (msg.includes("attendance")) {
+                        response = "Tracking active. Please refer to the Attendance Module. Requirement: >80% for compliance.";
+                    } else {
+                        response = "I am currently optimized for academic SAMS data. For specific syllabus details, please refer to the Resource tab.";
+                    }
+                } else {
+                    // NEW SHORTENED MESSAGE
+                    response = "[SYSTEM]: General queries are locked in Beta. Full EVRY deployment scheduled after Feb 2nd 2026.";
+                }
+
+                body.innerHTML += `<div class="chat-msg msg-ai">${response}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 500);
         }
     </script>
 </body>
