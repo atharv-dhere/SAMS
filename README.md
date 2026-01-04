@@ -1,22 +1,15 @@
-# SAMSbyAtharvDhere
-SAMS: Student Academic Monitor System Developed by Atharv Dhere, SAMS is a pro engineering dashboard featuring a smart 80% attendance monitor for 7 subjects, a time table, finance tracker, and task manager. Built with a dark-mode UI, it uses secure multi-user login and local storage to keep student data private and organized.
+SAMS | Student Academic Monitor System
+Developed by Atharv Dhere 
 
-## Legal Disclaimer & Terms of Use
+SAMSbyAtharvDhere is a pro-tier engineering dashboard designed for high-performance student organization. It features a glassmorphic dark-mode UI and integrates academic tracking with a specialized AI assistant to keep students organized, compliant, and focused.
 
-### 1. Ownership & Copyright
-Copyright © 2026 Atharv Dhere. All rights reserved. 
-SAMSbyAtharvDhere (Student Academic Monitor System) is proprietary software. Unauthorized copying, modification, distribution, or resale of this code, logic, or assets is strictly prohibited.
+Key Features
+EVRY AI Assistant (Beta): A specialized academic sidekick built to integrate with the SAMS environment. Currently in its Beta Phase (Full deployment scheduled for Feb 2nd), EVRY provides instant data on schedules, exam timelines, and attendance compliance. To maintain focus, the trial version is strictly optimized for academic queries.
 
-### 2. Non-Affiliation
-This project is an independent student-led initiative. It is NOT affiliated with, endorsed by, or connected to:
-* MIT-WPU (Maharashtra Institute of Technology - World Peace University)
-* SAMS Odisha (Student Academic Management System)
-* Any other official government or academic management portal.
+Smart Attendance Monitor: Featuring a real-time logic engine that automatically calculates "Safe Skip" or "Required Classes." It ensures students stay above the mandatory 80% threshold across all 7 subjects by providing predictive analytics based on current presence.
 
-### 3. Liability Waiver
-This software is provided "as-is" for educational and personal organization purposes. The developer is not responsible for:
-* Accuracy of academic data (attendance, grades, etc.).
-* Loss of data due to browser cache clearing or technical issues.
-* Any academic consequences resulting from the use of this tracker.
+Dynamic Timetable: A localized, high-visibility schedule that dynamically highlights active classes. It is designed to track daily academic flow and room assignments at a glance.
+
+Finance & Task Suite: A dual-purpose management module featuring integrated expense logging and a persistent To-Do list. This allows students to oversee their budget and assignments without leaving their academic monitoring environment.
 
 "Copyright © 2026 Atharv Dhere. All rights reserved. No part of this project may be copied, redistributed, or sold without express written permission."
