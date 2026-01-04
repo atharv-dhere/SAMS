@@ -179,10 +179,24 @@
                 </button>
                 <div class="acc-content">
                     <div class="acc-inner" style="padding-top:10px">
-                        <button class="res-btn" onclick="window.open('https://cas.mitwpu.edu.in/')">MIT-WPU CAS</button>
-                        <button class="res-btn" onclick="window.open('https://chatgpt.com')">AI Research</button>
-                        <button class="res-btn" onclick="window.open('https://www.youtube.com')">YouTube</button>
-                        <button class="res-btn" onclick="window.open('https://mitwpu.edu.in/life-wpu/library')">Digital Library</button>
+                        <button class="res-btn" onclick="window.open('https://cas.mitwpu.edu.in/')" style="background: var(--accent); color: white; font-weight: 800;">MIT-WPU CAS</button>
+                        <button class="res-btn" onclick="window.open('https://chatgpt.com')" style="background: var(--accent); color: white; font-weight: 800;">AI Research</button>
+                        <button class="res-btn" onclick="window.open('https://www.youtube.com')" style="background: var(--accent); color: white; font-weight: 800;">YouTube</button>
+                        <button class="res-btn" onclick="window.open('https://mitwpu.edu.in/life-wpu/library')" style="background: var(--accent); color: white; font-weight: 800;">Digital Library</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="acc-btn" onclick="toggleAccordion(this)">
+                    <span>GAMES</span>
+                    <span style="font-size:0.6rem">▼</span>
+                </button>
+                <div class="acc-content">
+                    <div class="acc-inner" style="padding-top:10px">
+                        <button class="res-btn" onclick="window.open('https://play2048.co/')" style="background: var(--accent); color: white; font-weight: 800;">2048 Puzzle</button>
+                        <button class="res-btn" onclick="window.open('https://tetris.com/play-tetris')" style="background: var(--accent); color: white; font-weight: 800;">Retro Tetris</button>
+                        <button class="res-btn" onclick="window.open('https://chromedino.com/')" style="background: var(--accent); color: white; font-weight: 800;">Dino Run</button>
                     </div>
                 </div>
             </div>
@@ -195,9 +209,12 @@
         </aside>
 
         <main class="main-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
                 <h2 style="margin: 0;">Academic Schedule</h2>
-                <span id="days-remaining" style="font-size: 0.7rem; color: var(--warning); font-weight: 800;"></span>
+                <div style="text-align: right;">
+                    <div id="live-date-header" style="font-size: 0.8rem; font-weight: 800; color: white;">DATE LOADING...</div>
+                    <span id="days-remaining" style="font-size: 0.7rem; color: var(--warning); font-weight: 800;"></span>
+                </div>
             </div>
 
             <div class="tt-grid">
@@ -286,7 +303,14 @@
         window.onload = () => { 
             document.getElementById('login-quote').innerText = `"${quotes[Math.floor(Math.random() * quotes.length)]}"`; 
             checkSession(); 
+            updateLiveDate();
         };
+
+        function updateLiveDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            document.getElementById('live-date-header').innerText = now.toLocaleDateString('en-US', options).toUpperCase();
+        }
 
         function checkSession() {
             const savedSession = sessionStorage.getItem("sams_active_user");
@@ -467,7 +491,6 @@
                         response = "I am currently optimized for academic SAMS data. For specific syllabus details, please refer to the Resource tab.";
                     }
                 } else {
-                    // NEW SHORTENED MESSAGE
                     response = "[SYSTEM]: General queries are locked in Beta. Full EVRY deployment scheduled after Feb 2nd 2026.";
                 }
 
