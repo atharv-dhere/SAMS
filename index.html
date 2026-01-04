@@ -306,22 +306,6 @@
             overlay.classList.toggle('show');
         }
 
-        let touchstartX = 0;
-        let touchendX = 0;
-
-        document.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; }, false);
-        document.addEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX;
-            handleGesture();
-        }, false);
-
-        function handleGesture() {
-            if (touchendX > touchstartX + 100) toggleMenu(); 
-            if (touchendX < touchstartX - 100) {
-                 if(document.getElementById('sidebar').classList.contains('open')) toggleMenu(); 
-            }
-        }
-
         function toggleAccordion(btn) {
             const content = btn.nextElementSibling;
             content.classList.toggle('show');
@@ -357,11 +341,41 @@
         function initDashboard() {
             const attGrid = document.getElementById('attendance-grid'), noteGrid = document.getElementById('subject-notes-container');
             attGrid.innerHTML = ''; noteGrid.innerHTML = '';
-            subjects.forEach(sub => {
+            
+            subjects.forEach((sub, index) => {
                 const id = sub.replace(/\s/g,'');
-                attGrid.innerHTML += `<div class="attendance-card"><div style="display:flex; justify-content:space-between; align-items:center;"><b style="font-size:0.85rem;">${sub}</b><span id="perc-${id}" style="font-weight:800; color:var(--primary);">0%</span></div><div class="progress-container"><div id="bar-${id}" class="progress-bar" style="background:var(--primary)"></div></div><div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:12px;">P: <span id="pres-${id}">0</span> | T: <span id="tot-${id}">0</span></div><div id="stat-${id}" style="font-size:0.65rem; font-weight:800; margin-bottom:15px;">-</div><div style="display:grid; grid-template-columns: 1fr 1fr 40px; gap:6px;"><button onclick="updateAtt('${sub}', true)" style="background:var(--success); color:white; font-size:0.6rem; padding:8px;">PRESENT</button><button onclick="updateAtt('${sub}', false)" style="background:var(--danger); color:white; font-size:0.6rem; padding:8px;">ABSENT</button><button onclick="resetAtt('${sub}')" style="background:rgba(255,255,255,0.1); padding:8px;">↺</button></div></div>`;
-                noteGrid.innerHTML += `<div style="margin-bottom:1.5rem;"><label style="font-size:0.7rem; color:var(--accent); font-weight:800; display:block; margin-bottom:5px;">${sub}</label><div style="display:flex; gap:5px;"><input id="note-in-${id}" placeholder="Type note..." style="padding:8px; font-size:0.8rem;"><button onclick="addNote('${sub}')" style="background:var(--primary); width:auto; padding:0 15px; font-size:0.7rem;">SAVE</button></div><div id="note-list-${id}" style="margin-top:10px;"></div></div>`;
+                // Determine color based on index for the buttons
+                const themeColor = index % 2 === 0 ? 'var(--primary)' : 'var(--accent)';
+                
+                // Attendance Card with ABSENT count
+                attGrid.innerHTML += `<div class="attendance-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="font-size:0.85rem;">${sub}</b>
+                        <span id="perc-${id}" style="font-weight:800; color:var(--primary);">0%</span>
+                    </div>
+                    <div class="progress-container"><div id="bar-${id}" class="progress-bar" style="background:var(--primary)"></div></div>
+                    <div style="font-size:0.7rem; color:var(--text-dim); margin-bottom:12px;">
+                        P: <span id="pres-${id}">0</span> | A: <span id="absent-${id}">0</span> | T: <span id="tot-${id}">0</span>
+                    </div>
+                    <div id="stat-${id}" style="font-size:0.65rem; font-weight:800; margin-bottom:15px;">-</div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 40px; gap:6px;">
+                        <button onclick="updateAtt('${sub}', true)" style="background:var(--success); color:white; font-size:0.6rem; padding:8px;">PRESENT</button>
+                        <button onclick="updateAtt('${sub}', false)" style="background:var(--danger); color:white; font-size:0.6rem; padding:8px;">ABSENT</button>
+                        <button onclick="resetAtt('${sub}')" style="background:rgba(255,255,255,0.1); padding:8px;">↺</button>
+                    </div>
+                </div>`;
+                
+                // Subject Note with WHITE text on COLOR background
+                noteGrid.innerHTML += `<div style="margin-bottom:1.5rem;">
+                    <label style="font-size:0.7rem; color:var(--accent); font-weight:800; display:block; margin-bottom:5px;">${sub}</label>
+                    <div style="display:flex; gap:5px;">
+                        <input id="note-in-${id}" placeholder="Type note..." style="padding:8px; font-size:0.8rem;">
+                        <button onclick="addNote('${sub}')" style="background:${themeColor}; color:white; width:auto; padding:0 15px; font-size:0.7rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">SAVE</button>
+                    </div>
+                    <div id="note-list-${id}" style="margin-top:10px;"></div>
+                </div>`;
             });
+
             const d = new Date().getDay(); if(d >=1 && d<=5) {
                 const dayEl = document.getElementById(`day-${d}`);
                 if(dayEl) dayEl.classList.add('active-day');
@@ -371,15 +385,38 @@
         function updateAtt(sub, isP, silent=false) {
             if (new Date() > SEM_END_DATE && !silent) { alert("Instructional period ended (May 9). Attendance is locked."); return; }
             const id = sub.replace(/\s/g,'');
-            let p = parseInt(document.getElementById(`pres-${id}`).innerText), t = parseInt(document.getElementById(`tot-${id}`).innerText);
-            if(!silent) { if(isP) p++; t++; }
+            
+            let p = parseInt(document.getElementById(`pres-${id}`).innerText);
+            let a = parseInt(document.getElementById(`absent-${id}`).innerText);
+            let t = parseInt(document.getElementById(`tot-${id}`).innerText);
+            
+            if(!silent) { 
+                if(isP) p++; 
+                else a++;
+                t++; 
+            }
+            
             const perc = t>0 ? ((p/t)*100).toFixed(1) : 0;
-            document.getElementById(`pres-${id}`).innerText = p; document.getElementById(`tot-${id}`).innerText = t;
+            document.getElementById(`pres-${id}`).innerText = p;
+            document.getElementById(`absent-${id}`).innerText = a;
+            document.getElementById(`tot-${id}`).innerText = t;
             document.getElementById(`perc-${id}`).innerText = perc + "%";
+            
             const bar = document.getElementById(`bar-${id}`), stat = document.getElementById(`stat-${id}`);
             bar.style.width = perc + "%";
-            if(perc < 80) { const n = Math.ceil((0.8*t - p)/0.2); stat.innerText = `NEED ${n} CLASSES`; stat.style.color = "var(--danger)"; bar.style.background="var(--danger)"; }
-            else { const s = Math.floor(p/0.8 - t); stat.innerText = s>0 ? `CAN SKIP ${s}` : "SAFE"; stat.style.color = "var(--success)"; bar.style.background="var(--success)"; }
+            
+            if(perc < 80) { 
+                const n = Math.ceil((0.8*t - p)/0.2); 
+                stat.innerText = `NEED ${n} CLASSES`; 
+                stat.style.color = "var(--danger)"; 
+                bar.style.background="var(--danger)"; 
+            }
+            else { 
+                const s = Math.floor(p/0.8 - t); 
+                stat.innerText = s>0 ? `CAN SKIP ${s}` : "SAFE"; 
+                stat.style.color = "var(--success)"; 
+                bar.style.background="var(--success)"; 
+            }
             if(!silent) saveData();
         }
 
@@ -394,18 +431,23 @@
             const data = { attendance: {}, notes: {}, tasks: document.getElementById('todo-list').innerHTML, expenses: document.getElementById('expense-list').innerHTML };
             subjects.forEach(sub => {
                 const id = sub.replace(/\s/g,'');
-                data.attendance[id] = { p: document.getElementById(`pres-${id}`).innerText, t: document.getElementById(`tot-${id}`).innerText };
+                data.attendance[id] = { 
+                    p: document.getElementById(`pres-${id}`).innerText, 
+                    a: document.getElementById(`absent-${id}`).innerText,
+                    t: document.getElementById(`tot-${id}`).innerText 
+                };
                 data.notes[id] = document.getElementById(`note-list-${id}`).innerHTML;
             });
-            localStorage.setItem(`sams_final_v45_${currentUser}`, JSON.stringify(data));
+            localStorage.setItem(`sams_v101_${currentUser}`, JSON.stringify(data));
         }
 
         function loadData() {
-            const saved = localStorage.getItem(`sams_final_v45_${currentUser}`); if(!saved) return;
+            const saved = localStorage.getItem(`sams_v101_${currentUser}`); if(!saved) return;
             const data = JSON.parse(saved);
             Object.keys(data.attendance).forEach(id => {
                 if(document.getElementById(`pres-${id}`)) {
                     document.getElementById(`pres-${id}`).innerText = data.attendance[id].p;
+                    document.getElementById(`absent-${id}`).innerText = data.attendance[id].a || 0;
                     document.getElementById(`tot-${id}`).innerText = data.attendance[id].t;
                     updateAtt(id, false, true);
                     if(data.notes[id]) document.getElementById(`note-list-${id}`).innerHTML = data.notes[id];
@@ -429,7 +471,14 @@
             document.getElementById('expense-list').prepend(d); document.getElementById('exp-amt').value = ''; saveData();
         }
 
-        function resetAtt(sub) { const id = sub.replace(/\s/g,''); document.getElementById(`pres-${id}`).innerText="0"; document.getElementById(`tot-${id}`).innerText="0"; updateAtt(sub, false, true); saveData(); }
+        function resetAtt(sub) { 
+            const id = sub.replace(/\s/g,''); 
+            document.getElementById(`pres-${id}`).innerText="0"; 
+            document.getElementById(`absent-${id}`).innerText="0"; 
+            document.getElementById(`tot-${id}`).innerText="0"; 
+            updateAtt(sub, false, true); 
+            saveData(); 
+        }
         
         function showLegal() {
             alert("SAMS LEGAL NOTICE:\n\n1. SAMS is an independent student project and is not affiliated with MIT-WPU, the Government of Odisha (SAMS Odisha), or any official portal.\n\n2. Software provided 'as-is'. Developer not responsible for data loss.\n\n3. External links property of respective owners.");
